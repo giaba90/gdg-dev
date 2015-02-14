@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app='gdgApp'>
+  <head>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+    <link   href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link   href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>GDG Locride WebApp</h1>
+    <div class="center-block">
+    <div class="row">
+   <div class="col-md-6">
+   <form name="reg_form" novalidate class="css-form" ng-controller="FrmCtrl" ng-submit='registra();'>
+        <ul>
+            <li class="err" ng-repeat="error in errors"> {{error}} </li>
+        </ul>
+        <ul>
+            <li class="info" ng-repeat="msg in msgs"> {{msg}} </li>
+        </ul>
+        <h2>Form di registrazione</h2>
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control"  ng-model="username" placeholder="Nome" required>
+        </div>
+        <div class="form-group">
+            <label>Cognome</label>
+            <input type="text" class="form-control" ng-model="usercognome" placeholder="Cognome" required>
+        </div>
+         <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control"  ng-model="useremail" placeholder="Email" required>
+        </div>
+        <button type="submit" class="btn btn-default" ng-disabled="reg_form.$invalid">Registra</button>
+    </form>
+   </div>
+    <div class="col-md-6">
+    <div ng-controller="PartecipantiCtrl">
+      <form name="myForm" >
+      <label>Inserisci numero partecipanti</label>
+      <input type="number" class="form-control" ng-model="value" min="0" max="99" required>
+      <tt>DEBUG MODE: {{value}}</tt><br><br><br>
+      <button class="btn btn-success" ng-click=estrai()>Estrai vincitori</button>
+       <tt>DEBUG MODE: {{winner}}</tt>
+      </form>
+      <h3>I vincitori sono i numeri:</h3> <span ng-repeat="win in winner"> {{win}}</span>
+
+     </div>
+    </div>
+    </div> <!-- chiusura row -->
+    </div> <!-- chiusura center block -->
+  </body>
+
+</html>

@@ -1,7 +1,7 @@
 <?php
 //DATABASE
 $host = "localhost";
-$db_user = "";
-$db_psw = "";
-$db_name = "";
+$db_user = "root";
+$db_psw = "root";
+$db_name = "gdg_db";
 ?>

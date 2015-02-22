@@ -1,49 +1,49 @@
 // Code goes here
-angular.module('gdgApp',[])
-  .controller('PartecipantiCtrl', ['$scope', function($scope){
-   $scope.value=1;
-   $scope.winner=[]; //array contenente il numero dei vincitori
-   var numofwinner=3;//numero di vincitori ad ogni riffa
-   $scope.estrai = function(){
+angular.module('gdgApp',['ngResource'])
+//service or factory
+.factory('Users', function($resource) {
+  return $resource('index.php/users/:id');
+})
+// controllers
+  .controller('PartecipantiCtrl', ['$scope','$http','Users', function($scope, $http, Users){
+    var participants; //contiene il numero di partecipanti
+    var numofwinner = 3; //numero di vincitori ad ogni riffa
+    $scope.winner = []; //array contenente il numero dei vincitori
+    $scope.estrai = estrai;
+    $scope.mostra = mostra;
+
+    count();
+
+    function count(){
+      $http.get('index.php/count').success(function(data){
+        participants = data.count;
+      });
+   };
+   function estrai(){
      for(var i=0; i<numofwinner; i++){
-       $scope.winner[i]=Math.floor(Math.random()*($scope.value+1));
+      $scope.userID = Math.floor(Math.random()*(participants)+1);
+      $scope.winner[i] = Users.get({id : $scope.userID});
      }
    };
+  function mostra(){
+    $scope.users = Users.query();
+  }
   }])
-  .controller('FrmCtrl', ['$scope','$http', function($scope, $http){
+  .controller('FrmCtrl', ['$scope','$http','Users', function($scope, $http,Users){
     $scope.errors = [];
     $scope.msgs = [];
 
-    $scope.azione="registraUtente";
+    $scope.utente = new Users();
+    $scope.addUtente = function(){
+      $scope.errors.splice(0, $scope.errors.length); // remove all error messages
+      $scope.msgs.splice(0, $scope.msgs.length);
 
-    $scope.registra = function() {
-
-    $scope.errors.splice(0, $scope.errors.length); // remove all error messages
-    $scope.msgs.splice(0, $scope.msgs.length);
-
-    $http({
-      method: 'POST',
-      url: 'api.php',
-      data: {
-        'action': $scope.azione,
-        'nome': $scope.username,
-        'cognome': $scope.usercognome,
-        'email': $scope.useremail
-      },
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).success(function(data, status, headers, config) {
-        if (data.msg != '')
-        {
-            $scope.msgs.push(data.msg);
-        }
-        else
-        {
-            $scope.errors.push(data.error);
-        }
-    }).error(function(data, status,headers, config) { // called asynchronously if an error occurs
-// or server returns response with an error status.
-        $scope.errors.push(status);
-    });
-};
+      $scope.utente.$save(function(data){
+        if (data.status != false){
+            $scope.msgs.push(data.id); }
+        else{
+            $scope.errors.push(data.message);}
+      });
+    };
 
   }]);

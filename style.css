@@ -1,7 +1,14 @@
-  .css-form input.ng-invalid.ng-touched {
-    background-color: #FA787E;
-  }
+.top{
+	margin-top: 20px;
+}
 
-  .css-form input.ng-valid.ng-touched {
-    background-color: #78FA89;
-  }
+.left{
+	margin-left: 30px;
+}
+.css-form input.ng-invalid.ng-touched {
+	background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+	background-color: #78FA89;
+}

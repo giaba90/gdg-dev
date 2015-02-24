@@ -9,8 +9,9 @@ require "NotORM.php";
 include("config.php");
 \Slim\Slim::registerAutoloader();
 //connect to database
-$col = "mysql:host=$host;dbname=$db_name";
-$pdo = new PDO($col , "$db_user", "$db_psw");
+// $col = "mysql:host=$host;dbname=$db_name";
+//$pdo = new PDO($col , "$db_user", "$db_psw");
+$pdo = new PDO('sqlite:gdg_db.sqlite3');
 $db  = new NotORM($pdo);
 // create new Slim istance
 $app = new \Slim\Slim();

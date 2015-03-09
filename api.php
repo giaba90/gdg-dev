@@ -6,7 +6,7 @@ error_reporting(-1);
 // require & include
 require "Slim/Slim.php";
 require "NotORM.php";
-include("config.php");
+//include("config.php");
 \Slim\Slim::registerAutoloader();
 //connect to database
 // $col = "mysql:host=$host;dbname=$db_name";

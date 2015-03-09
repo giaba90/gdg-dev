@@ -2,7 +2,7 @@
 angular.module('gdgApp', ['ngResource'])
 //service or factory
 .factory('Users', function($resource) {
-  return $resource('index.php/users/:id');
+  return $resource('api.php/users/:id');
 })
 // controllers
 .controller('MainCtrl', ['$scope', '$http', 'Users', '$window',
@@ -56,7 +56,7 @@ angular.module('gdgApp', ['ngResource'])
     }
 
     function count() {
-      $http.get('index.php/count').success(function(data) {
+      $http.get('api.php/count').success(function(data) {
         participants = data.count;
       });
     }

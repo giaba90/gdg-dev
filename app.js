@@ -7,9 +7,6 @@ angular.module('gdgApp', ['ngResource'])
 // controllers
 .controller('MainCtrl', ['$scope', '$http', 'Users', '$window',
   function($scope, $http, Users, $window) {
-    var participants; //contiene il numero di partecipanti
-    var numofwinner = 3; //numero di vincitori ad ogni riffa
-    $scope.winner = []; //array contenente il numero dei vincitori
 
     $scope.mostraReg = mostraDivReg;
     $scope.mostraUtenti = mostraDivUtenti;
@@ -17,9 +14,6 @@ angular.module('gdgApp', ['ngResource'])
 
     $scope.errors = "";
     $scope.msgs = "Utente inserito con id: ";
-
-
-    count();
 
     $scope.utente = new Users();
     $scope.addUser = function() {
@@ -51,27 +45,17 @@ angular.module('gdgApp', ['ngResource'])
       $scope.showForm = false;
       $scope.showUser = false;
       $scope.showWinner = true;
-
       estrai();
-    }
-
-    function count() {
-      $http.get('api.php/count').success(function(data) {
-        participants = data.count;
-      });
     }
 
     function mostra() {
       $scope.users = Users.query();
     }
 
-    function estrai() {
-      for (var i = 0; i < numofwinner; i++) {
-        $scope.userID = Math.floor(Math.random() * (participants) + 1);
-        $scope.winner[i] = Users.get({
-          id: $scope.userID
-        });
-      }
-    }
+    function estrai() { 
+      $http.get('api.php/randomusers').success(function(data){
+        $scope.winner = data;
+      });
+    } 
   }
 ]);
